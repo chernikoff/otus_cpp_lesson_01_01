@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(otus_cpp_lesson_01_01)
+project(otus_cpp_lesson_01_01 VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+
+configure_file(version.h.in version.h)
 
 add_executable(helloworld_cli
   main.cpp
@@ -15,3 +17,21 @@ set_target_properties(helloworld_cli
 target_compile_options(helloworld_cli
   PUBLIC
   -Werror -Wpedantic -Wall -Wextra)
+
+target_include_directories(helloworld_cli
+  PRIVATE
+  ${CMAKE_CURRENT_BINARY_DIR}
+  )
+
+install(TARGETS helloworld_cli
+  RUNTIME DESTINATION bin)
+
+set(CPACK_GENERATOR DEB)
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+
+set(CPACK_PACKAGE_CONTACT chernikoff.alex@gmail.com)
+
+include(CPack)
