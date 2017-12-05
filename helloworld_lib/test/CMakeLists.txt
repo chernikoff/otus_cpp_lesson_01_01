@@ -10,9 +10,7 @@ set_target_properties(test_version
 target_link_libraries(test_version
   PRIVATE
   ${GTEST_LIBRARIES}
-  helloworld)
-
-
-
+  helloworld
+  pthread)
 
 add_test(test_version test_version)
